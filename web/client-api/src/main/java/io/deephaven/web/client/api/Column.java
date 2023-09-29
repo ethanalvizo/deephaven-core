@@ -9,7 +9,10 @@ import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsNullable;
 import jsinterop.annotations.JsProperty;
 import jsinterop.base.Any;
+import jsinterop.base.JsPropertyMap;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -271,6 +274,55 @@ public class Column {
     @JsMethod
     public CustomColumn formatDate(String expression) {
         return new CustomColumn(name, CustomColumn.TYPE_FORMAT_DATE, expression);
+    }
+
+    @JsMethod
+    public CustomColumn[] formatDataBar(JsPropertyMap<Object> config) {
+        List<CustomColumn> result = new ArrayList<>();
+        String name = config.getAsAny("column").asString();
+
+        String min = null;
+        if(config.getAsAny(("min")) != null) {
+            min = String.valueOf(config.getAsAny("min").asDouble());
+        }
+        result.add(new CustomColumn(name + "__MIN", CustomColumn.TYPE_FORMAT_DATA_BAR, null));
+
+        String max = null;
+        if(config.getAsAny(("max")) != null) {
+            max = String.valueOf(config.getAsAny("max").asDouble());
+        }
+        result.add(new CustomColumn(name + "__MAX", CustomColumn.TYPE_FORMAT_DATA_BAR, null));
+
+        result.add(new CustomColumn(name + "__VALUE", CustomColumn.TYPE_FORMAT_DATA_BAR, name));
+
+        String axis = config.getAsAny("axis").asString();
+        result.add(new CustomColumn(name + "__AXIS", CustomColumn.TYPE_FORMAT_DATA_BAR, "`" + axis + "`"));
+
+        String positiveColor = config.getAsAny("positiveColor").asString();
+        result.add(new CustomColumn(name + "__POSITIVE_COLOR", CustomColumn.TYPE_FORMAT_DATA_BAR,
+                null));
+
+        String negativeColor = config.getAsAny("negativeColor").asString();
+        result.add(new CustomColumn(name + "__NEGATIVE_COLOR", CustomColumn.TYPE_FORMAT_DATA_BAR,
+                null));
+
+        String valuePlacement = config.getAsAny("valuePlacement").asString();
+        result.add(new CustomColumn(name + "__VALUE_PLACEMENT", CustomColumn.TYPE_FORMAT_DATA_BAR,
+                "`" + valuePlacement + "`"));
+
+        String direction = config.getAsAny("direction").asString();
+        result.add(new CustomColumn(name + "__DIRECTION", CustomColumn.TYPE_FORMAT_DATA_BAR, "`" + direction + "`"));
+
+        String opacity = "1.00";
+        result.add(new CustomColumn(name + "__OPACITY", CustomColumn.TYPE_FORMAT_DATA_BAR, opacity));
+
+        String marker = null;
+        result.add(new CustomColumn(name + "__MARKER", CustomColumn.TYPE_FORMAT_DATA_BAR, marker));
+
+        String markerColor = null;
+        result.add(new CustomColumn(name + "__MARKER_COLOR", CustomColumn.TYPE_FORMAT_DATA_BAR, markerColor));
+
+        return result.toArray(new CustomColumn[result.size()]);
     }
 
     @JsMethod

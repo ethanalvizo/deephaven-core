@@ -15,6 +15,7 @@ public class CustomColumn {
     public static final String TYPE_FORMAT_COLOR = "FORMAT_COLOR",
             TYPE_FORMAT_NUMBER = "FORMAT_NUMBER",
             TYPE_FORMAT_DATE = "FORMAT_DATE",
+            TYPE_FORMAT_DATA_BAR = "FORMAT_DATA_BAR",
             TYPE_NEW = "NEW";
 
     // Copied from ColumnFormattingValues
@@ -22,6 +23,7 @@ public class CustomColumn {
     private static final String TABLE_STYLE_FORMAT_SUFFIX = "__TABLE_STYLE_FORMAT";
     private static final String TABLE_NUMBER_FORMAT_SUFFIX = "__TABLE_NUMBER_FORMAT";
     private static final String TABLE_DATE_FORMAT_SUFFIX = "__TABLE_DATE_FORMAT";
+    private static final String TABLE_DATA_BAR_FORMAT_SUFFIX = "__TABLE_DATA_BAR_FORMAT";
 
     /**
      * Get the suffix to append to the name for the provided type
@@ -38,6 +40,9 @@ public class CustomColumn {
         }
         if (type.equals(TYPE_FORMAT_DATE)) {
             return TABLE_DATE_FORMAT_SUFFIX;
+        }
+        if (type.equals(TYPE_FORMAT_DATA_BAR)) {
+            return TABLE_DATA_BAR_FORMAT_SUFFIX;
         }
         if (type.equals(TYPE_NEW)) {
             return "";
@@ -70,6 +75,9 @@ public class CustomColumn {
         } else if (descriptorName.endsWith(TABLE_DATE_FORMAT_SUFFIX)) {
             name = descriptorName.substring(0, descriptorName.length() - TABLE_DATE_FORMAT_SUFFIX.length());
             type = TYPE_FORMAT_DATE;
+        } else if (descriptorName.endsWith(TABLE_DATA_BAR_FORMAT_SUFFIX)) {
+            name = descriptorName.substring(0, descriptorName.length() - TABLE_DATA_BAR_FORMAT_SUFFIX.length());
+            type = TYPE_FORMAT_DATA_BAR;
         } else {
             name = descriptorName;
             type = TYPE_NEW;

@@ -119,7 +119,7 @@ public class ColumnDefinition {
     }
 
     public boolean isVisible() {
-        return !isStyleColumn() && !isFormatColumn() && !isDataBarFormatColumn &&
+        return !isStyleColumn() && !isFormatColumn() &&
                 !isRollupConstituentNodeColumn() && !isHierarchicalRowDepthColumn()
                 && !isHierarchicalRowExpandedColumn();
     }
